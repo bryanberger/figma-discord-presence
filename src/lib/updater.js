@@ -1,6 +1,5 @@
 const { autoUpdater } = require("electron-updater");
 const { app, dialog } = require("electron");
-const log = require("electron-log");
 const logger = require("./logger");
 
 autoUpdater.autoDownload = false;
@@ -52,8 +51,7 @@ autoUpdater.on("download-progress", (progressObj) =>
 async function _update() {
   return new Promise(async (resolve, reject) => {
     try {
-      autoUpdater.logger = log;
-      autoUpdater.logger.transports.file.level = "info";
+      autoUpdater.logger = logger.log;
       // return resolve(autoUpdater.checkForUpdatesAndNotify());
       return resolve(autoUpdater.checkForUpdates());
     } catch (err) {
