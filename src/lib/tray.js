@@ -75,8 +75,7 @@ class CustomTray extends EventEmitter {
     this.tray = new Tray(this.getIconPath());
     this.update();
 
-    // this.tray.setContextMenu(Menu.buildFromTemplate(this.baseMenuTemplate));
-    nativeTheme.on("updated", () => update());
+    nativeTheme.on("updated", () => this.update());
   }
 
   getIconPath() {
