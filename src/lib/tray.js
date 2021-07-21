@@ -56,7 +56,7 @@ class CustomTray extends EventEmitter {
     { type: "separator" },
     {
       label: "Show Config",
-      click: () => shell.openItem(util.getAppDataPath()),
+      click: () => shell.openPath(util.getAppDataPath()),
     },
     { type: "separator" },
     {
