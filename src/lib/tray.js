@@ -55,6 +55,10 @@ class CustomTray extends EventEmitter {
 
     { type: "separator" },
     {
+      label: "Check for Updates...",
+      click: () => this.emit(events.CHECK_FOR_UPDATES),
+    },
+    {
       label: "Show Config",
       click: () => shell.openPath(util.getAppDataPath()),
     },

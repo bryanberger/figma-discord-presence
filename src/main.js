@@ -19,7 +19,7 @@ const state = {
 };
 
 function quit() {
-  logger.debug('main', 'quitting...');
+  logger.debug("main", "quitting...");
   app.quit();
 }
 
@@ -53,6 +53,10 @@ function registerEvents() {
 
   tray.on(events.DISCONNECT, async () => {
     await activity.disconnect();
+  });
+
+  tray.on(events.CHECK_FOR_UPDATES, async () => {
+    await updater.simpleCheck();
   });
 
   activity.on(events.DISCORD_CONNECTING, () => {
