@@ -48,8 +48,9 @@ async function getFigmaMetaData() {
 
 async function getIsFigmaRunning() {
   const processList = await psList();
+
   const isRunning =
-    processList.filter((p) => p.cmd.search("MacOS/Figma") > -1).length > 0;
+    processList.filter((p) => p.cmd.search("Figma.app/Contents/MacOS/Figma") > -1).length > 0;
 
   return isRunning;
 }
