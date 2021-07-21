@@ -18,11 +18,9 @@ const state = {
   isFigmaReady: false,
 };
 
-async function quit() {
+function quit() {
   logger.debug('main', 'quitting...');
-  if (activity) await activity.destroy();
   app.quit();
-  process.exit(0);
 }
 
 if (!app.requestSingleInstanceLock()) {
