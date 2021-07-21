@@ -83,7 +83,7 @@ function registerEvents() {
     // Is Discord open?
     const processList = await psList();
     const isRunning =
-      processList.filter((p) => p.cmd.search("Discord") > -1).length > 0;
+      processList.filter((p) => p.cmd.search("MacOS/Discord") > -1).length > 0;
 
     if (!isRunning) {
       dialog.showErrorBox(
