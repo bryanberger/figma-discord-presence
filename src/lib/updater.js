@@ -1,6 +1,6 @@
 const { autoUpdater } = require("electron-updater");
-const { dialog } = require("electron");
-
+const { app, dialog } = require("electron");
+const log = require("electron-log");
 const logger = require("./logger");
 
 autoUpdater.autoDownload = false;
@@ -12,39 +12,49 @@ autoUpdater.on("error", (error) => {
   );
 });
 
-autoUpdater.on("update-available", () => {
-  dialog.showMessageBox(
-    {
-      type: "info",
-      title: "Found Updates",
-      message: "Found a new version, do you want update now?",
-      buttons: ["Yes", "No"],
-    },
-    (buttonIndex) => {
-      if (buttonIndex === 0) {
-        autoUpdater.downloadUpdate();
-      }
-    }
-  );
+autoUpdater.on("update-available", async () => {
+  const { response } = await dialog.showMessageBox({
+    type: "question",
+    title: "Found Updates",
+    message: "Found a new version, do you want update now?",
+    defaultId: 0,
+    cancelId: 1,
+    buttons: ["Yes", "No"],
+  });
+
+  if (response === 0) {
+    logger.debug("updater", "update available");
+    await autoUpdater.downloadUpdate();
+  }
 });
 
-autoUpdater.on("update-downloaded", () => {
-  dialog.showMessageBox(
-    {
-      title: "Install Updates",
-      message: "Updates downloaded, application will close and update...",
-    },
-    () => {
-      setImmediate(() => autoUpdater.quitAndInstall());
-    }
-  );
+autoUpdater.on("update-downloaded", async () => {
+  const { response } = await dialog.showMessageBox({
+    type: "question",
+    buttons: ["Install and Relaunch", "Later"],
+    defaultId: 0,
+    cancelId: 1,
+    message: "A new version of " + app.getName() + " has been downloaded!",
+  });
+
+  if (response === 0) {
+    setImmediate(() => autoUpdater.quitAndInstall());
+  }
 });
+
+autoUpdater.on("download-progress", (progressObj) =>
+  logger.debug(
+    "updater",
+    `Update Download progress: ${JSON.stringify(progressObj)}`
+  )
+);
 
 async function _update() {
   return new Promise(async (resolve, reject) => {
     try {
-      autoUpdater.logger = logger;
-      // return resolve(autoUpdater.checkForUpdatesAndNotify())
+      autoUpdater.logger = log;
+      autoUpdater.logger.transports.file.level = "info";
+      // return resolve(autoUpdater.checkForUpdatesAndNotify());
       return resolve(autoUpdater.checkForUpdates());
     } catch (err) {
       reject(err);

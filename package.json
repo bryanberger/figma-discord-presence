@@ -1,6 +1,7 @@
 {
   "name": "figma-discord-presence",
-  "version": "1.0.4",
+  "productName": "Figma Discord Presence",
+  "version": "1.0.5",
   "description": "Discord Rich Presence for Figma",
   "main": "src/main.js",
   "scripts": {

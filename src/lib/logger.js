@@ -2,7 +2,6 @@ const log = require("electron-log");
 
 log.transports.console.format = "[{h}:{i}:{s}.{ms}] {text}";
 log.transports.file.format = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] {text}";
-log.transports.file.level = "debug";
 
 module.exports = {
   info: function (tag, msg) {
