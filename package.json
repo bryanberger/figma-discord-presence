@@ -1,0 +1,65 @@
+{
+  "name": "figma-discord-presence",
+  "version": "1.0.0",
+  "description": "Discord Rich Presence for Figma",
+  "main": "src/main.js",
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --mac --windows",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --windows",
+    "publish": "electron-builder --mac --publish always"
+  },
+  "repository": "",
+  "keywords": [
+    "discord",
+    "figma",
+    "discord-presence",
+    "discord-status",
+    "discord-rpc",
+    "electron"
+  ],
+  "author": "Bryan Berger",
+  "license": "MIT",
+  "dependencies": {
+    "active-win": "^7.6.0",
+    "bplist-parser": "^0.3.0",
+    "convict": "^6.2.0",
+    "discord-rpc": "^4.0.1",
+    "electron-log": "^4.3.5",
+    "electron-updater": "^4.3.9",
+    "fs-extra": "^10.0.0",
+    "lodash": "^4.17.21",
+    "ps-list": "^7.2.0"
+  },
+  "devDependencies": {
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7"
+  },
+  "build": {
+    "asar": true,
+    "appId": "com.bryanberger.figma-discord-presence",
+    "productName": "Figma Discord Presence",
+    "win": {
+      "target": "nsis",
+      "icon": "./build/icon.ico"
+    },
+    "mac": {
+      "icon": "./build/icon.icns",
+      "target": [
+        {
+          "target": "dmg"
+        },
+        {
+          "target": "zip"
+        }
+      ]
+    },
+    "publish": {
+      "provider": "s3",
+      "bucket": "figma-discord-presence"
+    }
+  }
+}
