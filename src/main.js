@@ -43,7 +43,7 @@ app
   .catch((err) => logger.error("main", err.message));
 
 function registerEvents() {
-  tray.on(events.QUIT, () => quit());
+  tray.on(events.QUIT, async () => await quit());
 
   tray.on(events.UPDATE_OPTIONS, async () => {
     await activity.updateOptions();
