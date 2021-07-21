@@ -66,6 +66,10 @@ To contribute to this repository, feel free to create a new fork of the reposito
 4. Commit your changes, and push them.
 5. Submit a Pull Request [here](https://github.com/bryanberger/figma-discord-presence/pulls)!
 
+## Notice
+
+While I am a Discord employee, this is by no way endorsed as an "official" integration with Figma. This is a personal project and is actually kind of a hacky solution to bring Rich Presence for Figma to Discord.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
