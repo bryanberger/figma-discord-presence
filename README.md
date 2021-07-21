@@ -29,6 +29,7 @@ Every ~15s your Figma activity is reported to Discord via the Discord RPC protoc
 
 **MacOS:**
 
+- MacOS may ask for permission to control other apps. It is required to enable and communicate with Figma and Discord.
 - This application assumes you install Figma Desktop normally, and have not changed or modified it in any way
 - `~/Library/Saved\ Application\ State/com.figma.Desktop.savedState/windows.plist` must exist
 - `~/Library/Application\ Support/Figma/settings.json` must exist
