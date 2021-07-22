@@ -1,5 +1,7 @@
 # Figma Discord Presence
 
+[![Build/release](https://github.com/bryanberger/figma-discord-presence/actions/workflows/deploy.yml/badge.svg)](https://github.com/bryanberger/figma-discord-presence/actions/workflows/deploy.yml)
+
 > Update your discord activity status with a rich presence from Figma.
 > Supports Windows and MacOS
 
