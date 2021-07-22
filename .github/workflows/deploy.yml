@@ -1,9 +1,10 @@
 name: Build/release
 
-# on: push
+on:
   push:
     branches:
       - master
+  workflow_dispatch: {}
 
 jobs:
   release:
