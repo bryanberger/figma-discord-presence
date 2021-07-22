@@ -17,6 +17,7 @@ class Activity extends EventEmitter {
   constructor() {
     super();
 
+    this.client = null;
     this.setActivityInterval = null;
     this.startTime = null;
 
@@ -50,6 +51,8 @@ class Activity extends EventEmitter {
   }
 
   async setActivity() {
+    if (this.client === null) return;
+
     try {
       const isFigmaRunning = await getIsFigmaRunning();
 
@@ -110,7 +113,7 @@ class Activity extends EventEmitter {
 
   async stopInterval() {
     clearInterval(this.setActivityInterval);
-    await this.client.clearActivity();
+    if (this.client) await this.client.clearActivity();
     this.setActivityInterval = null;
     this.startTime = null;
   }
@@ -130,7 +133,7 @@ class Activity extends EventEmitter {
   async destroy() {
     if (this.client) {
       this.stopInterval();
-      await this.client.destroy();
+      return await this.client.destroy();
     }
   }
 }

@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const bplist = require("bplist-parser");
-const activeWindow = require("active-win");
 const psList = require("ps-list");
+const winInfo = require("@bberger/win-info-fork");
 const fs = require("fs");
 
 const logger = require("./logger");
@@ -12,14 +12,42 @@ async function getFigmaMetaData() {
   let shareLink = null;
 
   try {
-    const parsed = await bplist.parseFile(
-      `${util.getHomePath()}/Library/Saved Application State/com.figma.Desktop.savedState/windows.plist`
-    );
+    if (process.platform === "darwin") {
+      const parsed = await bplist.parseFile(
+        `${util.getHomePath()}/Library/Saved Application State/com.figma.Desktop.savedState/windows.plist`
+      );
 
-    currentFigmaFilename =
-      _.flattenDeep(parsed).find((o) => o.hasOwnProperty("NSTitle"))[
-        "NSTitle"
-      ] || null;
+      currentFigmaFilename =
+        _.flattenDeep(parsed).find((o) => o.hasOwnProperty("NSTitle"))[
+          "NSTitle"
+        ] || null;
+    } else if (process.platform === "win32") {
+      // Find the main Figma process first
+      const processList = await psList();
+      const figmaProcesses =
+        processList.filter((p) => p.name.includes("Figma.exe")) || [];
+
+      // The main Figma process is the one that matches as a parent pid (ppid) from the others
+      // Should only be 1
+      const mainFigmaProcess = _.intersectionWith(
+        figmaProcesses,
+        (a, b) => a.ppid === b.pid
+      ).shift();
+
+      // Lookup its window title
+      if (mainFigmaProcess) {
+        try {
+          const figmaWindow = winInfo.getByPidSync(mainFigmaProcess.pid);
+          if (figmaWindow && figmaWindow.title.includes(" - Figma")) {
+            currentFigmaFilename = figmaWindow.title.split(" - Figma")[0];
+          }
+        } catch (err) {}
+      }
+    }
+
+    if (currentFigmaFilename === null) {
+      return { currentFigmaFilename, shareLink };
+    }
 
     const figmaDataFile = fs.readFileSync(
       `${util.getPath("appData")}/Figma/settings.json`,
@@ -47,17 +75,25 @@ async function getFigmaMetaData() {
 }
 
 async function getIsFigmaRunning() {
+  let isRunning = false;
   const processList = await psList();
 
-  const isRunning =
-    processList.filter((p) => p.cmd.search("Figma.app/Contents/MacOS/Figma") > -1).length > 0;
+  if (process.platform === "darwin") {
+    isRunning =
+      processList.filter(
+        (p) => p.cmd.search("Figma.app/Contents/MacOS/Figma") > -1
+      ).length > 0;
+  } else if (process.platform === "win32") {
+    isRunning =
+      processList.filter((p) => p.name.includes("Figma.exe")).length > 0;
+  }
 
   return isRunning;
 }
 
 async function getIsFigmaActive() {
-  const activeWin = await activeWindow({ screenRecordingPermission: false });
-  const isActive = activeWin?.owner?.name === "Figma" || false;
+  const activeWin = await winInfo.getActive();
+  const isActive = activeWin?.owner?.name.includes("Figma") || false;
 
   return isActive;
 }

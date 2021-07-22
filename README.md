@@ -1,6 +1,7 @@
 # Figma Discord Presence
 
 > Update your discord activity status with a rich presence from Figma.
+> Supports Windows and MacOS
 
 ![demo](.github/demo.png?raw=true)
 
@@ -24,8 +25,8 @@ Every ~15s your Figma activity is reported to Discord via the Discord RPC protoc
 
 ## Troubleshooting
 
-> Windows & Linux are currently not supported, but are coming soon.
-> This application requires Figma Desktop
+> Linux is currently not supported.
+> This application requires Figma Desktop.
 
 **MacOS:**
 
