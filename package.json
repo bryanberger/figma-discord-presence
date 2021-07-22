@@ -1,7 +1,7 @@
 {
   "name": "figma-discord-presence",
   "productName": "Figma Discord Presence",
-  "version": "1.0.11",
+  "version": "1.1.1",
   "description": "Discord Rich Presence for Figma",
   "main": "src/main.js",
   "scripts": {
@@ -11,7 +11,9 @@
     "dist": "electron-builder --mac --windows",
     "dist:mac": "electron-builder --mac",
     "dist:win": "electron-builder --windows",
-    "publish": "electron-builder --mac --publish always"
+    "publish": "electron-builder --mac --windows --publish always",
+    "publish:mac": "electron-builder --mac --publish always",
+    "publish:win": "electron-builder --windows --publish always"
   },
   "repository": "",
   "keywords": [
@@ -25,7 +27,7 @@
   "author": "Bryan Berger",
   "license": "MIT",
   "dependencies": {
-    "active-win": "^7.6.0",
+    "@bberger/win-info-fork": "^0.2.14",
     "bplist-parser": "^0.3.0",
     "convict": "^6.2.0",
     "discord-rpc": "^4.0.1",

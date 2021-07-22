@@ -1,6 +1,9 @@
 # Figma Discord Presence
 
+[![Build/release](https://github.com/bryanberger/figma-discord-presence/actions/workflows/deploy.yml/badge.svg)](https://github.com/bryanberger/figma-discord-presence/actions/workflows/deploy.yml)
+
 > Update your discord activity status with a rich presence from Figma.
+> Supports Windows and MacOS
 
 ![demo](.github/demo.png?raw=true)
 
@@ -24,8 +27,8 @@ Every ~15s your Figma activity is reported to Discord via the Discord RPC protoc
 
 ## Troubleshooting
 
-> Windows & Linux are currently not supported, but are coming soon.
-> This application requires Figma Desktop
+> Linux is currently not supported.
+> This application requires Figma Desktop.
 
 **MacOS:**
 
@@ -44,6 +47,9 @@ git clone https://github.com/bryanberger/figma-discord-presence
 # Change directory
 cd figma-discord-presence
 
+# Copy and edit env vars
+cp .env.example .env
+
 # Install dependencies
 npm install
 
@@ -55,6 +61,16 @@ npm run dist
 
 # Publish (using the S3 Provider, make sure you're authenticated and have a bucket setup)
 npm run publish
+```
+
+## Release
+
+This project uses Github Actions to build for Windows and Mac. Upon successful build, if a git tag exists it will publish to S3 (given you've provided the proper access tokens).
+
+```
+eg:
+git tag v0.0.0
+git push && git push --tags
 ```
 
 ## Contributing

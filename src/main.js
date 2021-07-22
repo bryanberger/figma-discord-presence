@@ -18,13 +18,15 @@ const state = {
   isFigmaReady: false,
 };
 
-function quit() {
+async function quit() {
   logger.debug("main", "quitting...");
+  if (activity) await activity.destroy();
   app.quit();
 }
 
 if (!app.requestSingleInstanceLock()) {
-  quit();
+  logger.debug("main", "second instance detected, quitting this one...");
+  app.quit();
 }
 
 if (process.platform === "darwin") app.dock.hide();
@@ -85,9 +87,16 @@ function registerEvents() {
 
   activity.on(events.DISCORD_LOGIN_ERROR, async () => {
     // Is Discord open?
+    let isRunning = false;
     const processList = await psList();
-    const isRunning =
-      processList.filter((p) => p.cmd.search("MacOS/Discord") > -1).length > 0;
+
+    if (process.platform === "darwin") {
+      isRunning =
+        processList.filter((p) => p.cmd.includes("MacOS/Discord")).length > 0;
+    } else if (process.platform === "win32") {
+      isRunning =
+        processList.filter((p) => p.name.includes("Discord.exe")).length > 0;
+    }
 
     if (!isRunning) {
       dialog.showErrorBox(
@@ -106,5 +115,9 @@ app.on("window-all-closed", () => {
   // should not quit
 });
 
-process.on("unhandledRejection", logger.error);
-process.on("uncaughtException", logger.error);
+process.on("unhandledRejection", (err) =>
+  logger.error("unhandledRejection", err.message)
+);
+process.on("uncaughtException", (err) =>
+  logger.error("uncaughtException", err.message)
+);
