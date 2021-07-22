@@ -63,6 +63,16 @@ npm run dist
 npm run publish
 ```
 
+## Release
+
+This project uses Github Actions to build for Windows and Mac. Upon successful build, if a git tag exists it will publish to S3 (given you've provided the proper access tokens).
+
+```
+eg:
+git tag v0.0.0
+git push && git push --tags
+```
+
 ## Contributing
 To contribute to this repository, feel free to create a new fork of the repository and submit a pull request.
 
