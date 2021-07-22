@@ -50,14 +50,20 @@ autoUpdater.on("download-progress", (progressObj) =>
 );
 
 async function _simpleCheck() {
-  const { versionInfo } = await _update();
+  const { updateInfo } = await _update();
+  const currentVersion = app.getVersion();
 
-  if (versionInfo && versionInfo.version === process.env.npm_package_version) {
+  logger.debug(
+    "updater",
+    `Current Version: ${currentVersion} | Server Version: ${updateInfo.version}`
+  );
+
+  if (updateInfo && updateInfo.version === currentVersion) {
     await dialog.showMessageBox({
       type: "info",
       message: "You're up-to-date!",
       detail: `${app.getName()} ${
-        versionInfo.version
+        updateInfo.version
       } is currently the newest version available.`,
     });
   }

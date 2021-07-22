@@ -4,8 +4,8 @@ const electron_notarize = require("electron-notarize");
 
 require("dotenv").config();
 module.exports = async function (params) {
-  // Only notarize the app on Mac OS only.
-  if (process.platform !== "darwin") {
+  // Only notarize the app on Mac OS only and on CI.
+  if (process.platform !== "darwin" || process.env.NODE_ENV === "development") {
     return;
   }
 

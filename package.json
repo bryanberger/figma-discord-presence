@@ -1,7 +1,7 @@
 {
   "name": "figma-discord-presence",
   "productName": "Figma Discord Presence",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Discord Rich Presence for Figma",
   "main": "src/main.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder --mac --windows",
-    "dist:mac": "electron-builder --mac",
+    "dist:mac": "NODE_ENV=development electron-builder --mac",
     "dist:win": "electron-builder --windows",
     "publish": "electron-builder --mac --windows --publish always",
     "publish:mac": "electron-builder --mac --publish always",
