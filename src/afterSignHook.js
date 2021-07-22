@@ -27,9 +27,8 @@ module.exports = async function (params) {
     await electron_notarize.notarize({
       appBundleId: appId,
       appPath: appPath,
-      appleId: process.env.appleId, // this is your apple ID it should be stored in an .env file
-      appleIdPassword: process.env.appleIdPassword, // this is NOT your apple ID password. You need to create an application specific password from https://appleid.apple.com under "security" you can generate such a password
-    //   ascProvider: process.env.appleIdProvider, // this is only needed if you have multiple developer profiles linked to your apple ID.
+      appleId: process.env.APPLE_ID, // this is your apple ID it should be stored in an .env file
+      appleIdPassword: process.env.APPLE_ID_PASSWORD, // this is NOT your apple ID password. You need to create an application specific password from https://appleid.apple.com under "security" you can generate such a password
     });
   } catch (error) {
     console.error(error);

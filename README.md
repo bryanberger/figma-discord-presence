@@ -45,6 +45,9 @@ git clone https://github.com/bryanberger/figma-discord-presence
 # Change directory
 cd figma-discord-presence
 
+# Copy and edit env vars
+cp .env.example .env
+
 # Install dependencies
 npm install
 
