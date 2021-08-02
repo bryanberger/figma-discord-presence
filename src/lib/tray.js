@@ -83,24 +83,14 @@ class CustomTray extends EventEmitter {
   }
 
   getIconPath() {
-    let colorMode;
+    const iconState = this.state.isDiscordReady ? "On" : "Off";
 
     if (process.platform === "darwin") {
-      colorMode = nativeTheme.shouldUseDarkColors ? "dark" : "light";
+      return path.join(__dirname, `/../../assets/Icon${iconState}Template.png`);
     } else if (process.platform === "win32") {
       // always use the darkmode icon on windows, taskbar seems to be dark regardless of theme
-      colorMode = "dark";
+      return path.join(__dirname, `/../../assets/Icon${iconState}Windows.png`);
     }
-
-    const iconState = this.state.isDiscordReady ? "on" : "off";
-    const iconColorMode =
-      colorMode === "dark" ? `darkmode-${iconState}` : `lightmode-${iconState}`;
-    const iconPath = path.join(
-      __dirname,
-      `/../../assets/menuIcon-${iconColorMode}@2x.png`
-    );
-
-    return iconPath;
   }
 
   update() {
