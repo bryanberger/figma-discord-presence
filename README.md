@@ -2,6 +2,8 @@
 
 [![Build/release](https://github.com/bryanberger/figma-discord-presence/actions/workflows/deploy.yml/badge.svg)](https://github.com/bryanberger/figma-discord-presence/actions/workflows/deploy.yml)
 
+<a href="https://www.producthunt.com/posts/figma-discord-presence?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-figma-discord-presence" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=305303&theme=dark" alt="Figma Discord Presence - Adds rich presence activity to Discord for Figma | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 > Update your discord activity status with a rich presence from Figma.
 > Supports Windows and MacOS
 
