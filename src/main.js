@@ -10,7 +10,7 @@ const CustomTray = require("./lib/tray");
 const Activity = require("./lib/activity");
 
 const { app } = electron;
-let tray, activity;
+let tray, activity, updateCheckInterval;
 
 const state = {
   isDiscordConnecting: false,
@@ -36,16 +36,41 @@ app
   .then(() => updater.update())
   .then(() => config.save(0, true))
   .then(() => config.load())
-  .then(() => (tray = new CustomTray(state)))
-  .then(() => (activity = new Activity()))
-  .then(() => registerEvents())
-  .then(() => logger.debug("main", "initalized!"))
+  .then(() => init())
   .catch((err) => logger.error("main", err.message));
+
+function init() {
+  tray = new CustomTray(state);
+  activity = new Activity();
+
+  registerEvents();
+
+  if (config.get("autoCheckForUpdates")) {
+    startUpdateInterval();
+  }
+
+  logger.debug("main", "initalized!");
+}
+
+function startUpdateInterval() {
+  logger.debug("main", "starting automatic update interval");
+  updateCheckInterval = setInterval(() => updater.update(), 9e5); // every 15 minutes
+}
 
 function registerEvents() {
   tray.on(events.QUIT, async () => await quit());
 
-  tray.on(events.UPDATE_OPTIONS, async () => {
+  tray.on(events.UPDATE_OPTIONS, async (configKey) => {
+    if (configKey === "autoCheckForUpdates") {
+      if (updateCheckInterval) {
+        clearInterval(updateCheckInterval);
+        updateCheckInterval = null;
+      } else {
+        startUpdateInterval();
+      }
+      return;
+    }
+
     await activity.updateOptions();
   });
 

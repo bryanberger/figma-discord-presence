@@ -22,6 +22,11 @@ const conf = convict({
     default: true,
     format: "Boolean",
   },
+  autoCheckForUpdates: {
+    doc: "Periodically check for updates",
+    default: true,
+    format: "Boolean",
+  },
   // connectOnStartup: {
   //   doc: "Connect to Discord on application startup",
   //   default: true,
