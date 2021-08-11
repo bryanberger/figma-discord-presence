@@ -1,6 +1,5 @@
 const EventEmitter = require("events");
 const RPC = require("discord-rpc");
-const fs = require("fs");
 
 const {
   getIsFigmaRunning,
@@ -90,7 +89,6 @@ class Activity extends EventEmitter {
       // https://discord.com/developers/applications/<application_id>/rich-presence/assets
       this.client.setActivity({
         details: details.join("") || undefined,
-
         startTimestamp: this.startTime,
         largeImageKey: "logo",
         largeImageText: "Designing in Figma",
@@ -101,7 +99,7 @@ class Activity extends EventEmitter {
         instance: false,
       });
     } catch (err) {
-      logger.error("activity", err.message);
+      logger.error("activity", `Failed to setActivity: ${err}`);
     }
   }
 
@@ -113,7 +111,6 @@ class Activity extends EventEmitter {
 
   async stopInterval() {
     clearInterval(this.setActivityInterval);
-    if (this.client) await this.client.clearActivity();
     this.setActivityInterval = null;
     this.startTime = null;
   }
@@ -131,10 +128,13 @@ class Activity extends EventEmitter {
   }
 
   async destroy() {
-    if (this.client) {
-      this.stopInterval();
-      return await this.client.destroy();
-    }
+    try {
+      await this.client.clearActivity();
+      await this.client.destroy();
+    } catch {}
+
+    this.client = null;
+    this.stopInterval();
   }
 }
 

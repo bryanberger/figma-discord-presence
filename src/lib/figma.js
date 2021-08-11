@@ -80,8 +80,8 @@ async function getIsFigmaRunning() {
 
   if (process.platform === "darwin") {
     isRunning =
-      processList.filter(
-        (p) => p.cmd.search("Figma.app/Contents/MacOS/Figma") > -1
+      processList.filter((p) =>
+        p.cmd.includes("Figma.app/Contents/MacOS/Figma")
       ).length > 0;
   } else if (process.platform === "win32") {
     isRunning =
@@ -92,10 +92,18 @@ async function getIsFigmaRunning() {
 }
 
 async function getIsFigmaActive() {
-  const activeWin = await winInfo.getActive();
-  const isActive = activeWin?.owner?.name.includes("Figma") || false;
+  let isActive = false;
+
+  try {
+    const activeWin = await winInfo.getActive();
+    isActive = activeWin?.owner?.name.includes("Figma") || false;
+  } catch (err) {}
 
   return isActive;
 }
 
-module.exports = { getFigmaMetaData, getIsFigmaRunning, getIsFigmaActive };
+module.exports = {
+  getFigmaMetaData,
+  getIsFigmaRunning,
+  getIsFigmaActive,
+};

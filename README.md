@@ -31,6 +31,7 @@ Every ~15s your Figma activity is reported to Discord via the Discord RPC protoc
 
 > Linux is currently not supported.
 > This application requires Figma Desktop.
+> Ensure that you have your activity status enabled in Discord, or your activity won't be visible to anyone.
 
 **MacOS:**
 
