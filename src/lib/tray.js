@@ -43,6 +43,13 @@ class CustomTray extends EventEmitter {
           click: (menuItem) =>
             this.saveConfigAndUpdate("hideViewButton", menuItem.checked),
         },
+        {
+          label: "Automatically check for updates",
+          type: "checkbox",
+          checked: config.get("autoCheckForUpdates"),
+          click: (menuItem) =>
+            this.saveConfigAndUpdate("autoCheckForUpdates", menuItem.checked),
+        },
         // {
         //   label: "Connect to Discord when this app starts",
         //   type: "checkbox",
@@ -148,7 +155,7 @@ class CustomTray extends EventEmitter {
     config.save();
 
     // immeditely try a discord activity update
-    this.emit(events.UPDATE_OPTIONS);
+    this.emit(events.UPDATE_OPTIONS, configKey);
   }
 
   setState(state) {
