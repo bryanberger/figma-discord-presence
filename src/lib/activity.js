@@ -79,16 +79,13 @@ class Activity extends EventEmitter {
       const isHideViewButton = config.get("hideViewButton");
 
       // Build detail string
-      const details = [
-        !isHideStatus ? (isFigmaActive ? "Active" : "Idle") : "",
-        `${!isHideStatus && !isHideFilenames ? " " : ""}`,
-        !isHideFilenames ? `in: "${currentFigmaFilename}"` : undefined,
-      ];
+      let unformattedDetails = `${!isHideStatus ? (isFigmaActive ? "Active" : "Idle") : "Working"} ${!isHideFilenames && 'in: ' + currentFigmaFilename}`.trim()
+      const formattedDetails = unformattedDetails.charAt(0).toUpperCase() + unformattedDetails.slice(1)
 
       // You'll need to have the logo asset uploaded to
       // https://discord.com/developers/applications/<application_id>/rich-presence/assets
       this.client.setActivity({
-        details: details.join("") || undefined,
+        details: formattedDetails || undefined,
         startTimestamp: this.startTime,
         largeImageKey: "logo",
         largeImageText: "Designing in Figma",
