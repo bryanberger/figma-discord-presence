@@ -13,6 +13,7 @@ Sentry.init({
       levels: ["error"],
     }),
   ],
+  ignoreErrors: ["in JSON at position"],
 });
 
 module.exports = {
