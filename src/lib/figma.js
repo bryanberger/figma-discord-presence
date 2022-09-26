@@ -62,7 +62,7 @@ async function getFigmaMetaData() {
         if (title === currentFigmaFilename) {
           // based on the current file name, we can lookup the id and generate a "view link"
           shareLink = encodeURI(
-            `https://www.figma.com${path}/${title}${params ? params : ""}`
+            `https://www.figma.com${path}/${params ? params : ""}`
           );
         }
       });

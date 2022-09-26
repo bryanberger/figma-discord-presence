@@ -19,3 +19,4 @@ pids
 .tmp/
 !.vscode/launch.json
 .env
+notes.md

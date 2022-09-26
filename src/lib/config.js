@@ -63,7 +63,7 @@ function save(times, init = false) {
       logger.error("config", err.message);
       if (times < retries) {
         setTimeout(() => {
-          _save(times + 1);
+          save(times + 1);
         }, 1000);
       }
     }
