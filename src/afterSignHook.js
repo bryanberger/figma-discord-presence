@@ -25,6 +25,7 @@ module.exports = async function (params) {
   console.log(`Notarizing ${appId} found at ${appPath}`);
   try {
     await electron_notarize.notarize({
+      ascProvider: process.env.APPLE_TEAM_ID, // adding this because I belong to multiple teams
       appBundleId: appId,
       appPath: appPath,
       appleId: process.env.APPLE_ID, // this is your apple ID it should be stored in an .env file
