@@ -21,7 +21,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x' # Use the latest version of Python
+          # Use the latest version of Python 2 for this version of electron-builder
+          python-version: '2.x'
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
