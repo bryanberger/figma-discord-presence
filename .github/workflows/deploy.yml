@@ -12,17 +12,12 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
+        # use macos-11 for now until we can fix python versions
+        os: [macos-11, windows-latest]
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          # Use the latest version of Python 2 for this version of electron-builder
-          python-version: '2.x'
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
